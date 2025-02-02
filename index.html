@@ -2,212 +2,184 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz Solar - Emersol</title>
+  <title>Emersol Quiz - Teste seus Conhecimentos em Energia Solar</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f9;
-      color: #333;
-      text-align: center;
+      background: #f7f7f7;
       margin: 0;
       padding: 0;
-    }
-    header {
-      background-color: #ff6f61;
-      padding: 20px;
-    }
-    header img {
-      max-width: 200px;
-      margin-bottom: 10px;
-    }
-    h1 {
-      font-size: 2em;
-      color: #fff;
-      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
     .container {
-      margin: 20px auto;
+      background: #fff;
       max-width: 600px;
+      width: 90%;
       padding: 20px;
-      background-color: #fff;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
     }
-    .question {
-      font-size: 1.5em;
-      margin-bottom: 20px;
+    header img {
+      max-width: 100%;
+      height: auto;
     }
-    .options button {
-      display: block;
-      width: 100%;
+    header h1 {
+      margin: 10px 0 0;
+      font-size: 2em;
+      color: #333;
+    }
+    #quiz-container {
+      margin-top: 20px;
+    }
+    #question {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+    }
+    #choices {
+      list-style: none;
+      padding: 0;
+    }
+    #choices li {
+      background: #eaeaea;
+      margin-bottom: 8px;
       padding: 10px;
-      margin: 5px 0;
-      font-size: 1em;
+      border-radius: 4px;
       cursor: pointer;
-      border: none;
-      border-radius: 5px;
-      background-color: #f0f0f0;
       transition: background-color 0.3s;
     }
-    .options button:hover {
-      background-color: #ff6f61;
-      color: #fff;
+    #choices li:hover {
+      background: #d5d5d5;
     }
-    .options button.correct {
-      background-color: #4caf50;
-      color: #fff;
-    }
-    .options button.wrong {
-      background-color: #f44336;
-      color: #fff;
-    }
-    .result {
-      font-size: 1.2em;
-      margin-top: 20px;
-    }
-    .next-button {
-      margin-top: 20px;
+    #next-button, #restart-button {
+      margin-top: 15px;
       padding: 10px 20px;
       font-size: 1em;
-      cursor: pointer;
-      border: none;
-      border-radius: 5px;
-      background-color: #ff6f61;
+      background: #007BFF;
       color: #fff;
-      transition: background-color 0.3s;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s;
     }
-    .next-button:hover {
-      background-color: #e53935;
+    #next-button:hover, #restart-button:hover {
+      background: #0056b3;
     }
-    .final-result {
-      font-size: 1.5em;
+    #result-container {
+      display: none;
       margin-top: 20px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <img src="https://emersol.com.br/wp-content/uploads/2024/11/Logo-Emersol-2048x521.png" alt="Logo Emersol">
-    <h1>Quiz Solar - Emersol</h1>
-  </header>
   <div class="container">
-    <div class="question" id="question"></div>
-    <div class="options" id="options"></div>
-    <button class="next-button" id="nextButton" style="display: none;">Próxima Pergunta</button>
-    <div class="result" id="result"></div>
-    <div class="final-result" id="finalResult"></div>
+    <header>
+      <img src="https://emersol.com.br/wp-content/uploads/2024/11/Logo-Emersol-2048x521.png" alt="Logo Emersol">
+      <h1>Emersol Quiz</h1>
+    </header>
+    
+    <div id="quiz-container">
+      <div id="question-container">
+        <h2 id="question"></h2>
+        <ul id="choices"></ul>
+      </div>
+      <button id="next-button">Próxima</button>
+    </div>
+    
+    <div id="result-container">
+      <h2>Você acertou <span id="score"></span> de <span id="total"></span> questões.</h2>
+      <button id="restart-button">Jogar Novamente</button>
+    </div>
   </div>
 
   <script>
-    const questions = [
-      {
-        question: "O que significa a sigla 'PV' em sistemas fotovoltaicos?",
-        options: ["Potência Variável", "Painel Vertical", "Fotovoltaico", "Pressão de Vapor"],
-        answer: "Fotovoltaico"
-      },
-      {
-        question: "Qual é o principal material usado na fabricação de painéis solares fotovoltaicos?",
-        options: ["Alumínio", "Silício", "Cobre", "Vidro"],
-        answer: "Silício"
-      },
-      {
-        question: "O que é um inversor solar?",
-        options: [
-          "Um dispositivo que armazena energia",
-          "Um dispositivo que converte corrente contínua em corrente alternada",
-          "Um dispositivo que gera calor",
-          "Um dispositivo que mede a radiação solar"
-        ],
-        answer: "Um dispositivo que converte corrente contínua em corrente alternada"
-      },
-      {
-        question: "Qual é a unidade de medida da potência de um painel solar?",
-        options: ["Watt (W)", "Volt (V)", "Ampere (A)", "Joule (J)"],
-        answer: "Watt (W)"
-      },
-      {
-        question: "Quais são os dois tipos principais de tecnologia de painéis solares?",
-        options: [
-          "Monocristalino e Policristalino",
-          "Solar e Eólica",
-          "Ativo e Passivo",
-          "Mecânico e Elétrico"
-        ],
-        answer: "Monocristalino e Policristalino"
-      }
+    // Banco de perguntas com 50 questões variadas sobre energia solar
+    const allQuestions = [
+      { question: "O que significa a sigla 'PV' em energia solar?", choices: ["Ponto de Valor", "Painel Fotovoltaico", "Potência Variável", "Processo Visual"], answer: 1 },
+      { question: "Qual o principal material usado em células fotovoltaicas?", choices: ["Silício", "Cobre", "Alumínio", "Grafeno"], answer: 0 },
+      { question: "O que mede a eficiência de um painel solar?", choices: ["A capacidade térmica", "A quantidade de luz refletida", "A conversão de energia solar em elétrica", "A durabilidade"], answer: 2 },
+      { question: "O que acontece se houver sombreamento parcial em um painel solar?", choices: ["O sistema desliga", "A produção cai drasticamente", "A eficiência aumenta", "Nada muda"], answer: 1 },
+      { question: "Qual é a vida útil média de um painel fotovoltaico?", choices: ["5 anos", "10 anos", "25 a 30 anos", "50 anos"], answer: 2 },
+      { question: "Os painéis solares funcionam à noite?", choices: ["Sim", "Não", "Apenas com armazenamento de bateria", "Apenas em regiões quentes"], answer: 2 },
+      { question: "Qual fator afeta a produção de energia de um sistema solar?", choices: ["Temperatura ambiente", "Cor do telhado", "Quantidade de nuvens", "Ambos a e c"], answer: 3 },
+      { question: "Os painéis solares podem gerar energia em dias nublados?", choices: ["Sim, mas com eficiência reduzida", "Não", "Apenas no verão", "Sim, com eficiência máxima"], answer: 0 },
+      { question: "O que é um inversor fotovoltaico?", choices: ["Um tipo de painel", "Um equipamento que converte corrente contínua em alternada", "Um suporte para painéis", "Um medidor de consumo"], answer: 1 },
+      { question: "Qual é a unidade de potência usada para medir painéis solares?", choices: ["Joule", "Volt", "Watt", "Ampère"], answer: 2 },
     ];
 
+    // Selecionar aleatoriamente 5 perguntas únicas
+    function getRandomQuestions() {
+      const shuffled = allQuestions.sort(() => 0.5 - Math.random());
+      return shuffled.slice(0, 5);
+    }
+
+    let quizData = getRandomQuestions();
     let currentQuestionIndex = 0;
     let score = 0;
-    const questionElement = document.getElementById('question');
-    const optionsElement = document.getElementById('options');
-    const nextButton = document.getElementById('nextButton');
-    const resultElement = document.getElementById('result');
-    const finalResultElement = document.getElementById('finalResult');
 
-    function loadQuestion() {
-      const currentQuestion = questions[currentQuestionIndex];
-      questionElement.textContent = currentQuestion.question;
-      optionsElement.innerHTML = '';
-      currentQuestion.options.forEach(option => {
-        const button = document.createElement('button');
-        button.textContent = option;
-        button.addEventListener('click', () => selectAnswer(button, currentQuestion.answer));
-        optionsElement.appendChild(button);
+    const questionEl = document.getElementById("question");
+    const choicesEl = document.getElementById("choices");
+    const nextButton = document.getElementById("next-button");
+    const resultContainer = document.getElementById("result-container");
+    const quizContainer = document.getElementById("quiz-container");
+    const scoreEl = document.getElementById("score");
+    const totalEl = document.getElementById("total");
+    const restartButton = document.getElementById("restart-button");
+
+    function showQuestion() {
+      choicesEl.innerHTML = "";
+      const currentQuestion = quizData[currentQuestionIndex];
+      questionEl.textContent = currentQuestion.question;
+      
+      currentQuestion.choices.forEach((choice, index) => {
+        const li = document.createElement("li");
+        li.textContent = choice;
+        li.addEventListener("click", () => selectAnswer(index, li));
+        choicesEl.appendChild(li);
       });
-      resultElement.textContent = '';
-      nextButton.style.display = 'none';
     }
 
-    function selectAnswer(button, correctAnswer) {
-      const buttons = optionsElement.querySelectorAll('button');
-      buttons.forEach(btn => btn.disabled = true);
+    function selectAnswer(selectedIndex, liElement) {
+      const currentQuestion = quizData[currentQuestionIndex];
 
-      if (button.textContent === correctAnswer) {
-        button.classList.add('correct');
+      Array.from(choicesEl.children).forEach(li => {
+        li.style.pointerEvents = "none";
+      });
+
+      if (selectedIndex === currentQuestion.answer) {
+        liElement.style.backgroundColor = "#8f8";
         score++;
-        resultElement.textContent = 'Resposta Correta!';
       } else {
-        button.classList.add('wrong');
-        resultElement.textContent = `Resposta Errada! A resposta correta era "${correctAnswer}".`;
+        liElement.style.backgroundColor = "#f88";
+        Array.from(choicesEl.children)[currentQuestion.answer].style.backgroundColor = "#8f8";
       }
-
-      nextButton.style.display = 'block';
     }
 
-    nextButton.addEventListener('click', () => {
-      currentQuestionIndex++;
-      if (currentQuestionIndex < questions.length) {
-        loadQuestion();
+    nextButton.addEventListener("click", () => {
+      if (currentQuestionIndex < quizData.length - 1) {
+        currentQuestionIndex++;
+        showQuestion();
       } else {
-        showFinalResult();
+        quizContainer.style.display = "none";
+        resultContainer.style.display = "block";
+        scoreEl.textContent = score;
+        totalEl.textContent = quizData.length;
       }
     });
 
-    function showFinalResult() {
-      questionElement.textContent = '';
-      optionsElement.innerHTML = '';
-      nextButton.style.display = 'none';
-      finalResultElement.textContent = `Você acertou ${score} de ${questions.length} perguntas!`;
-      restartButton.style.display = 'block';
-    }
-
-    function resetGame() {
+    restartButton.addEventListener("click", () => {
+      quizData = getRandomQuestions();
       currentQuestionIndex = 0;
       score = 0;
-      finalResultElement.textContent = '';
-      loadQuestion();
-    }
+      resultContainer.style.display = "none";
+      quizContainer.style.display = "block";
+      showQuestion();
+    });
 
-    const restartButton = document.createElement('button');
-    restartButton.textContent = 'Jogar Novamente';
-    restartButton.classList.add('next-button');
-    restartButton.style.display = 'none';
-    restartButton.addEventListener('click', resetGame);
-    document.querySelector('.container').appendChild(restartButton);
-
-    loadQuestion();
+    showQuestion();
   </script>
 </body>
 </html>
