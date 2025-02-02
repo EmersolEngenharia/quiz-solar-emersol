@@ -97,18 +97,42 @@
 
   <script>
     // Banco de perguntas com 50 questões variadas sobre energia solar
-    const allQuestions = [
-      { question: "O que significa a sigla 'PV' em energia solar?", choices: ["Ponto de Valor", "Painel Fotovoltaico", "Potência Variável", "Processo Visual"], answer: 1 },
-      { question: "Qual o principal material usado em células fotovoltaicas?", choices: ["Silício", "Cobre", "Alumínio", "Grafeno"], answer: 0 },
-      { question: "O que mede a eficiência de um painel solar?", choices: ["A capacidade térmica", "A quantidade de luz refletida", "A conversão de energia solar em elétrica", "A durabilidade"], answer: 2 },
-      { question: "O que acontece se houver sombreamento parcial em um painel solar?", choices: ["O sistema desliga", "A produção cai drasticamente", "A eficiência aumenta", "Nada muda"], answer: 1 },
-      { question: "Qual é a vida útil média de um painel fotovoltaico?", choices: ["5 anos", "10 anos", "25 a 30 anos", "50 anos"], answer: 2 },
-      { question: "Os painéis solares funcionam à noite?", choices: ["Sim", "Não", "Apenas com armazenamento de bateria", "Apenas em regiões quentes"], answer: 2 },
-      { question: "Qual fator afeta a produção de energia de um sistema solar?", choices: ["Temperatura ambiente", "Cor do telhado", "Quantidade de nuvens", "Ambos a e c"], answer: 3 },
-      { question: "Os painéis solares podem gerar energia em dias nublados?", choices: ["Sim, mas com eficiência reduzida", "Não", "Apenas no verão", "Sim, com eficiência máxima"], answer: 0 },
-      { question: "O que é um inversor fotovoltaico?", choices: ["Um tipo de painel", "Um equipamento que converte corrente contínua em alternada", "Um suporte para painéis", "Um medidor de consumo"], answer: 1 },
-      { question: "Qual é a unidade de potência usada para medir painéis solares?", choices: ["Joule", "Volt", "Watt", "Ampère"], answer: 2 },
-    ];
+const allQuestions = [
+  { question: "O que significa a sigla 'PV' em energia solar?", choices: ["Ponto de Valor", "Painel Fotovoltaico", "Potência Variável", "Processo Visual"], answer: 1 },
+  { question: "Qual o principal material usado em células fotovoltaicas?", choices: ["Silício", "Cobre", "Alumínio", "Grafeno"], answer: 0 },
+  { question: "O que mede a eficiência de um painel solar?", choices: ["A capacidade térmica", "A quantidade de luz refletida", "A conversão de energia solar em elétrica", "A durabilidade"], answer: 2 },
+  { question: "O que acontece se houver sombreamento parcial em um painel solar?", choices: ["O sistema desliga", "A produção cai drasticamente", "A eficiência aumenta", "Nada muda"], answer: 1 },
+  { question: "Qual é a vida útil média de um painel fotovoltaico?", choices: ["5 anos", "10 anos", "25 a 30 anos", "50 anos"], answer: 2 },
+  { question: "Os painéis solares funcionam à noite?", choices: ["Sim", "Não", "Apenas com armazenamento de bateria", "Apenas em regiões quentes"], answer: 2 },
+  { question: "Qual fator afeta a produção de energia de um sistema solar?", choices: ["Temperatura ambiente", "Cor do telhado", "Quantidade de nuvens", "Ambos a e c"], answer: 3 },
+  { question: "Os painéis solares podem gerar energia em dias nublados?", choices: ["Sim, mas com eficiência reduzida", "Não", "Apenas no verão", "Sim, com eficiência máxima"], answer: 0 },
+  { question: "O que é um inversor fotovoltaico?", choices: ["Um tipo de painel", "Um equipamento que converte corrente contínua em alternada", "Um suporte para painéis", "Um medidor de consumo"], answer: 1 },
+  { question: "Qual é a unidade de potência usada para medir painéis solares?", choices: ["Joule", "Volt", "Watt", "Ampère"], answer: 2 },
+  { question: "Qual a principal função do MPPT em um sistema solar?", choices: ["Armazenar energia", "Converter energia em calor", "Maximizar a potência gerada", "Reduzir a tensão elétrica"], answer: 2 },
+  { question: "Quais são os principais tipos de inversores solares?", choices: ["Central, String e Microinversor", "PWM e MPPT", "AC e DC", "Padrão e Duplo"], answer: 0 },
+  { question: "O que é um sistema solar on-grid?", choices: ["Conectado à rede elétrica", "Sem conexão com a rede elétrica", "Um sistema híbrido", "Um sistema que não precisa de inversor"], answer: 0 },
+  { question: "O que é um sistema solar off-grid?", choices: ["Conectado à rede elétrica", "Que usa baterias para armazenar energia", "Um sistema híbrido", "Somente para uso comercial"], answer: 1 },
+  { question: "Qual é o efeito da temperatura sobre os painéis solares?", choices: ["Aumenta a eficiência", "Reduz a eficiência", "Não afeta", "Apenas altera a tensão"], answer: 1 },
+  { question: "O que é um banco de baterias em energia solar?", choices: ["Um conjunto de painéis solares", "Um sistema para armazenar energia elétrica", "Um sistema de controle de potência", "Um tipo de inversor"], answer: 1 },
+  { question: "Qual o tipo mais comum de bateria usada em sistemas solares?", choices: ["Níquel-Cádmio", "Íon-Lítio", "Ácido-Chumbo", "Sódio"], answer: 2 },
+  { question: "Qual é a função do controlador de carga em sistemas off-grid?", choices: ["Aumentar a voltagem", "Evitar sobrecarga e descarga excessiva das baterias", "Transformar energia AC em DC", "Converter energia térmica em elétrica"], answer: 1 },
+  { question: "O que acontece se os painéis solares estiverem sujos?", choices: ["A produção de energia pode diminuir", "A eficiência aumenta", "A produção de energia não é afetada", "Eles podem superaquecer"], answer: 0 },
+  { question: "Qual é a inclinação ideal de um painel solar?", choices: ["90°", "45°", "Depende da latitude local", "Sempre horizontal"], answer: 2 },
+  { question: "O que significa a sigla kWp?", choices: ["Kilowatt Pico", "Kilowatt de Potência", "Kilowatt Produzido", "Kilowatt por segundo"], answer: 0 },
+  { question: "O que é a tarifa branca na energia elétrica?", choices: ["Um desconto para quem usa energia solar", "Uma tarifa diferenciada para consumidores com variação horária", "Um imposto sobre energia renovável", "Um tipo de sistema de armazenamento"], answer: 1 },
+  { question: "Qual tecnologia de célula solar é mais eficiente atualmente?", choices: ["Células de silício monocristalino", "Células de silício policristalino", "Células de filme fino", "Células orgânicas"], answer: 0 },
+  { question: "O que é o efeito fotovoltaico?", choices: ["Conversão da luz solar em eletricidade", "Aquecimento da superfície do painel", "Reflexão da luz", "Produção de calor"], answer: 0 },
+  { question: "O que é um sistema híbrido de energia solar?", choices: ["Combina energia solar e eólica", "Combina energia solar e diesel", "Utiliza baterias e conexão com a rede", "Somente funciona em locais remotos"], answer: 2 },
+  { question: "Os sistemas fotovoltaicos podem alimentar veículos elétricos?", choices: ["Sim, diretamente", "Não", "Sim, com carregadores especiais", "Somente em residências"], answer: 2 },
+  { question: "Qual é a maior desvantagem dos sistemas solares fotovoltaicos?", choices: ["Baixa eficiência em comparação a outras fontes", "Alto custo inicial", "Não funcionam durante o inverno", "Precisam de combustíveis fósseis"], answer: 1 },
+  { question: "O que é um medidor bidirecional?", choices: ["Mede apenas a energia consumida", "Mede apenas a energia gerada", "Mede tanto o consumo quanto a injeção de energia na rede", "Calcula o consumo médio"], answer: 2 },
+  { question: "Qual é a principal vantagem da energia solar?", choices: ["Baixo custo de manutenção", "Depende de combustíveis fósseis", "Gera poluição", "Funciona melhor em áreas frias"], answer: 0 },
+  { question: "O que significa o termo 'grid-tie'?", choices: ["Sistema conectado à rede elétrica", "Sistema isolado", "Um tipo de bateria", "Um sistema de resfriamento"], answer: 0 },
+  { question: "Qual órgão regulamenta a geração distribuída no Brasil?", choices: ["ANEEL", "INMETRO", "IBAMA", "CEMIG"], answer: 0 },
+  { question: "Quanto tempo, em média, leva para um sistema solar se pagar?", choices: ["1-2 anos", "4-8 anos", "10-15 anos", "Mais de 20 anos"], answer: 1 },
+];
+
+
 
     // Selecionar aleatoriamente 5 perguntas únicas
     function getRandomQuestions() {
